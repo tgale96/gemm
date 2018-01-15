@@ -6,12 +6,9 @@ list(APPEND gemm_dependencies ${CUDA_LIBRARIES})
 # For Google Benchmark
 set(BENCHMARK_ENABLE_TESTING OFF CACHE BOOL "Disable GBench testing")
 add_subdirectory(${PROJECT_SOURCE_DIR}/third_party/benchmark)
-list(APPEND gemm_includes ${BENCHMARK_INCLUDE_DIRS})
-list(APPEND gemm_dependencies ${BENCHMARK_LIBRARIES})
+list(APPEND benchmark_includes "${PROJECT_SOURCES_DIR}/third_party/benchmark/include")
+list(APPEND benchmark_dependencies "benchmark")
 
-# For BLAS on osx
+# For BLAS on Apple
 find_library(ACCELERATE Accelerate)
-list(APPEND gemm_dependencies ${ACCELERATE})
-
-message("poop")
-message(${ACCELERATE})
+list(APPEND benchmark_dependencies ${ACCELERATE})

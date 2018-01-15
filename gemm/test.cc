@@ -39,20 +39,20 @@ int main() {
 
   cout << m << "x" << k << " * " << k << "x" << n << endl;
   
-  auto t1 = GetTime();
-  cblas_sgemm(CblasColMajor,
-      CblasNoTrans,
-      CblasNoTrans,
-      m, n, k,
-      1.f,
-      a, m,
-      b, k,
-      0.f,
-      c, m);
-  auto total_seconds = ElapsedTime(t1, GetTime());
-  cout << "Reference: " << total_seconds << " seconds" << endl;
+  // auto t1 = GetTime();
+  // cblas_sgemm(CblasColMajor,
+  //     CblasNoTrans,
+  //     CblasNoTrans,
+  //     m, n, k,
+  //     1.f,
+  //     a, m,
+  //     b, k,
+  //     0.f,
+  //     c, m);
+  // auto total_seconds = ElapsedTime(t1, GetTime());
+  // cout << "Reference: " << total_seconds << " seconds" << endl;
   
-  t1 = GetTime();
+  auto t1 = GetTime();
   cpu::cblas_sgemm(false,
       false,
       m, n, k,
@@ -61,7 +61,7 @@ int main() {
       b, k,
       0.0,
       c, m);
-  total_seconds = ElapsedTime(t1, GetTime());
+  auto total_seconds = ElapsedTime(t1, GetTime());
   cout << "Schedule 0: " << total_seconds << " seconds" << endl;
   
   // for (int i = 0; i < m; ++i) {
