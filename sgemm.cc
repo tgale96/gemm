@@ -2,6 +2,8 @@
 
 #include <cstring>
 
+namespace cpu {
+
 // Computes C = alpha*op(A)*op(B) + beta*C, where
 // A is an m x k matrix, and B is a k x n. A, B, C
 // are store in column major format
@@ -34,3 +36,5 @@ void cblas_sgemm(const bool transa, const bool transb,
     }
   }
 }
+
+} // namespace cpu

@@ -1,5 +1,18 @@
+PROJECT=gemm
+CC=g++
+
+CUDA_DIR=/usr/local/cuda
+BLAS_DIR=/opt/local
+INCLUDE=-I. -I$(CUDA_DIR)/include
+LIB=-L$(CUDA_DIR)/lib -lcudart
+FLAGS=-std=c++11 -framework Accelerate
+
+TEST_BIN=test
+
+.PHONY: test
+
 test:
-	g++ -std=c++11 -I. -I/usr/local/cuda/include test.cc sgemm.cc -o test
+	$(CC) $(FLAGS) $(INCLUDE) $(TEST_BIN).cc sgemm.cc -o $(TEST_BIN) $(LIB)
 
 clean:
-	rm -rf test
+	rm -rf $(TEST_BIN)
