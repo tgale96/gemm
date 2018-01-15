@@ -5,6 +5,16 @@
 namespace gemm {
 namespace benchmark {
 
+inline void DeepBenchMatrixDims(::benchmark::internal::Benchmark *b) {
+  std::vector<int> ms = {16, 32, 64, 128, 7000};
+  std::vector<int> nks = {1760, 2048, 2560, 4096};
+  for (auto &m : ms) {
+    for (auto &nk : nks) {
+      b->Args({m, nk, nk});
+    }
+  }
+}
+
 class GemmBenchmark : public ::benchmark::Fixture {
 public:
   GemmBenchmark() : gen_(time(nullptr)) {}
