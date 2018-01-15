@@ -2,6 +2,7 @@
 #include <benchmark/benchmark.h>
 
 #include <iostream>
+#include <vector>
 
 #include <gemm/gemm_benchmark.h>
 
@@ -10,11 +11,11 @@ namespace benchmark {
 
 class Blas : public GemmBenchmark {};
 
-BENCHMARK_F(Blas, Sgemm)(::benchmark::State &st) {
+BENCHMARK_DEFINE_F(Blas, Sgemm)(::benchmark::State &st) {
   int m = st.range(0);
   int k = st.range(1);
   int n = st.range(2);
-
+  
   float *a = this->CreateRandomMatrix<float>(m, k);
   float *b = this->CreateRandomMatrix<float>(k, n);
   float *c = this->CreateZeroMatrix<float>(m, n);
@@ -37,13 +38,19 @@ BENCHMARK_F(Blas, Sgemm)(::benchmark::State &st) {
 }
 
 static void SgemmArgs(::benchmark::internal::Benchmark *b) {
-  b->Args({16, 1760, 1760});
+  std::vector<int> ms = {16, 32, 64, 128, 7000};
+  std::vector<int> nks = {1760, 2048, 2560, 4096};
+  for (auto &m : ms) {
+    for (auto &nk : nks) {
+      b->Args({m, nk, nk});
+    }
+  }
 }
 
 BENCHMARK_REGISTER_F(Blas, Sgemm)
   ->Apply(SgemmArgs)
-  ->Unit(::benchmark::kMillisecond)
-  ->Iterations(100);
+  ->Unit(::benchmark::kMicrosecond)
+  ->Iterations(10);
 
 } // namespace benchmark
 } // namespace gemm
