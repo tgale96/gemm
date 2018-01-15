@@ -1,16 +1,16 @@
-#include <Accelerate/Accelerate.h>
 #include <benchmark/benchmark.h>
 
 #include <iostream>
 
 #include "gemm/gemm_benchmark.h"
+#include "gemm/sgemm.h"
 
 namespace gemm {
 namespace benchmark {
 
-class Blas : public GemmBenchmark {};
+class Cpu : public GemmBenchmark {};
 
-BENCHMARK_DEFINE_F(Blas, Sgemm)(::benchmark::State &st) {
+BENCHMARK_DEFINE_F(Cpu, Sgemm_0)(::benchmark::State &st) {
   int m = st.range(0);
   int k = st.range(1);
   int n = st.range(2);
@@ -20,9 +20,9 @@ BENCHMARK_DEFINE_F(Blas, Sgemm)(::benchmark::State &st) {
   float *c = this->CreateZeroMatrix<float>(m, n);
   
   for (auto _ : st) {
-    cblas_sgemm(CblasColMajor,
-        CblasNoTrans,
-        CblasNoTrans,
+    gemm::cblas_sgemm_0(
+        false,
+        false,
         m, n, k,
         1.f,
         a, m,
@@ -36,7 +36,7 @@ BENCHMARK_DEFINE_F(Blas, Sgemm)(::benchmark::State &st) {
   delete[] c;
 }
 
-BENCHMARK_REGISTER_F(Blas, Sgemm)
+BENCHMARK_REGISTER_F(Cpu, Sgemm_0)
   ->Apply(DeepBenchMatrixDims)
   ->Unit(::benchmark::kMicrosecond)
   ->Iterations(10);

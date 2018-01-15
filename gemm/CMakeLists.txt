@@ -21,4 +21,4 @@ set(benchmark_suite "run_benchmarks")
 add_executable(${benchmark_suite} ${benchmark_srcs})
 
 target_include_directories(${benchmark_suite} BEFORE PUBLIC "${benchmark_includes}")
-target_link_libraries(${benchmark_suite} ${benchmark_dependencies})
+target_link_libraries(${benchmark_suite} ${benchmark_dependencies} ${gemm_lib})

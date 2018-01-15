@@ -2,12 +2,12 @@
 
 #include <cstring>
 
-namespace cpu {
+namespace gemm {
 
 // Computes C = alpha*op(A)*op(B) + beta*C, where
 // A is an m x k matrix, and B is a k x n. A, B, C
 // are store in column major format
-void cblas_sgemm(const bool transa, const bool transb,
+void cblas_sgemm_0(const bool transa, const bool transb,
     const int m, const int n, const int k,
     const float alpha, const float *a, const int lda,
     const float *b, const int ldb, const float beta,
@@ -37,4 +37,4 @@ void cblas_sgemm(const bool transa, const bool transb,
   }
 }
 
-} // namespace cpu
+} // namespace gemm
