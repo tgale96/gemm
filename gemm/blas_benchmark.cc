@@ -18,7 +18,7 @@ BENCHMARK_DEFINE_F(Blas, Sgemm)(::benchmark::State &st) {
   float *a = this->CreateRandomMatrix<float>(m, k);
   float *b = this->CreateRandomMatrix<float>(k, n);
   float *c = this->CreateZeroMatrix<float>(m, n);
-  
+
   for (auto _ : st) {
     cblas_sgemm(CblasColMajor,
         CblasNoTrans,
@@ -39,7 +39,8 @@ BENCHMARK_DEFINE_F(Blas, Sgemm)(::benchmark::State &st) {
 BENCHMARK_REGISTER_F(Blas, Sgemm)
   ->Apply(DeepBenchMatrixDims)
   ->Unit(::benchmark::kMicrosecond)
-  ->Iterations(10);
+  ->Iterations(10)
+  ->UseRealTime();
 
 } // namespace benchmark
 } // namespace gemm
