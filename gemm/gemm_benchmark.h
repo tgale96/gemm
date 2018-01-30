@@ -6,6 +6,7 @@
 namespace gemm {
 namespace benchmark {
 
+#ifdef FULLDB
 inline void DeepBenchMatrixDims(::benchmark::internal::Benchmark *b) {
   std::vector<int> ms = {16, 32, 64, 128, 7000};
   std::vector<int> nks = {1760, 2048, 2560, 4096};
@@ -15,6 +16,19 @@ inline void DeepBenchMatrixDims(::benchmark::internal::Benchmark *b) {
     }
   }
 }
+
+#else
+inline void DeepBenchMatrixDims(::benchmark::internal::Benchmark *b) {
+  std::vector<int> ms = {16, 32, 64, 128};
+  std::vector<int> nks = {1760, 2048, 2560};
+  for (auto &m : ms) {
+    for (auto &nk : nks) {
+      b->Args({m, nk, nk});
+    }
+  }
+}
+
+#endif // FULLDB
 
 class GemmBenchmark : public ::benchmark::Fixture {
 public:
